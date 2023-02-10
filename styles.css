@@ -3,6 +3,7 @@ body {
     height: 0;
     font-size: 0;
     overflow: hidden;
+    background-color: black;
 }
 
 #frameCounter {
@@ -11,6 +12,6 @@ body {
     text-align: right;
     color: white;
     position: fixed;
-    top: 0;
-    right: 0;
+    top: 16px;
+    right: 16px;
 }

@@ -1,6 +1,6 @@
-import { space, ship, thruster } from './assets.js';
+import { space, ship, thruster, laser } from './assets.js';
 import { FPS, SHIP_SPEC } from './variables.js';
-import { keyIsActive, toRads } from './utils.js';
+import { toRads } from './utils.js';
 
 let renderedFrame = 0;
 
@@ -12,30 +12,42 @@ export let currentX = SHIP_SPEC.x;
 export let currentY = SHIP_SPEC.y;
 export let currentAngle = SHIP_SPEC.a;
 
-const keydown = (event) => keys[event.keyCode] = true;
+const keydown = (event) => keys[event.keyCode] = event.keyCode;
 const keyup = (event) => keys[event.keyCode] = false;
 
-setInterval(update, 1000 / FPS)
+window.requestAnimationFrame(update);
+
 window.addEventListener('keydown', keydown);
 window.addEventListener('keyup', keyup);
 
 const keys = new Array();
-let fire = true;
+let fire = false;
+
+let start = Date.now();
 
 function update() {
-    handlePosition();
+    let stop = Date.now();
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    handleKeyEvents();
     space(canvas, ctx);
     ship(ctx, renderedFrame);
     thruster(ctx, renderedFrame, fire);
-
     counter.innerHTML = `
-    ${renderedFrame % FPS + '/' + FPS} <br>
-    ${currentAngle} <br>
-    ${fire}`;
+    ${stop - start}ms <br>`;
+    start = stop;
+
     renderedFrame++;
+
+    window.requestAnimationFrame(update);
 }
 
-function handlePosition() {
+function handleKeyEvents() {
+    // laser
+    if (keys[32]) {
+        laser(ctx, currentX, currentY, currentAngle);
+    }
     // turn left
     if (keys[37] || keys[65]) {
         currentAngle += SHIP_SPEC.angV;

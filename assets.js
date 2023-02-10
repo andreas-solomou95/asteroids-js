@@ -3,12 +3,9 @@ import { toRads } from './utils.js';
 import { currentX, currentY, currentAngle } from './index.js';
 
 export function space(canvas, ctx, color = 'black') {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-    ctx.save();
+    // ctx.fillStyle = color;
+    // ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    // ctx.save();
 }
 
 export function ship(ctx, renderedFrame) {
@@ -40,16 +37,13 @@ export function ship(ctx, renderedFrame) {
     ctx.shadowBlur  = 5;
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
-    ctx.shadowColor = !!keyframe ? 'limegreen' : '#258200';
-    ctx.strokeStyle = !!keyframe ? 'limegreen' : 'limegreen';
+    ctx.shadowColor = !!keyframe ? 'limegreen' : '#0f3808';
+    ctx.strokeStyle = !!keyframe ? 'limegreen' : '#0f3808';
     ctx.lineWidth = 2;
     ctx.stroke();
-    ctx.save();
 }
 
 export function thruster(ctx, renderedFrame, fire) {
-    const x = currentX;
-    const y = currentY;
     const radius = SHIP_SPEC.r;
     const angle = toRads(currentAngle);
 
@@ -59,12 +53,12 @@ export function thruster(ctx, renderedFrame, fire) {
 
     ctx.beginPath();
     ctx.moveTo(
-        x - radius * (Math.cos(angle)),
-        y + radius * (Math.sin(angle))
+        currentX - radius * (Math.cos(angle)),
+        currentY + radius * (Math.sin(angle))
     );
     ctx.lineTo(
-        x - keyframe * radius / thrust * (Math.cos(angle)),
-        y + keyframe * radius / thrust * (Math.sin(angle))
+        currentX - keyframe * radius / thrust * (Math.cos(angle)),
+        currentY + keyframe * radius / thrust * (Math.sin(angle))
     );
 
     ctx.shadowBlur = 5;
@@ -75,5 +69,34 @@ export function thruster(ctx, renderedFrame, fire) {
     ctx.lineWidth = 2;
 
     ctx.stroke();
-    ctx.save();
+}
+
+export function laser(ctx, x, y, a) {
+    const radius = SHIP_SPEC.r;
+    const angle = toRads(a);
+
+    const laserX = x + 2 * radius * (Math.cos(angle));
+    const laserY = y - 2 * radius * (Math.sin(angle));
+
+    ctx.fillStyle = "red";
+    ctx.fillRect(laserX, laserY, 2, 2);
+
+
+    
+    //     ctx.beginPath();
+    //     ctx.moveTo(
+    //         x - radius * -1 * (Math.cos(angle)),
+    //         y + radius * -1 * (Math.sin(angle))
+    //     );
+    //     ctx.lineTo(
+    //         x - radius * -4 * (Math.cos(angle)),
+    //         y + radius * -4 * (Math.sin(angle))
+    //     );
+    //     ctx.shadowBlur = 5;
+    //     ctx.shadowOffsetX = 0;
+    //     ctx.shadowOffsetY = 0;
+    //     ctx.shadowColor = '#f00';
+    //     ctx.strokeStyle = '#f00';
+    //     ctx.lineWidth = 2;
+    //     ctx.stroke();
 }

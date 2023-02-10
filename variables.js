@@ -8,6 +8,8 @@ const SHIP_DIMENSIONS = {
 
 export const SHIP_SPEC = {
     ...SHIP_DIMENSIONS,
-    dv: Math.round(20 / SHIP_DIMENSIONS.r),
-    angV: Math.round(16 / SHIP_DIMENSIONS.r)
+    // dv: Math.round(20 / SHIP_DIMENSIONS.r),
+    // angV: Math.round(16 / SHIP_DIMENSIONS.r)
+    dv: 2,
+    angV: 5
 }
