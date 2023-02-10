@@ -24,9 +24,19 @@ const keys = new Array();
 let fire = false;
 
 let start = Date.now();
+let minFrametime = Number.MAX_SAFE_INTEGER;
+let maxFrametime = Number.MIN_SAFE_INTEGER;
 
 function update() {
     let stop = Date.now();
+    const frametime = stop - start;
+    start = stop;
+    minFrametime = Math.min(frametime, minFrametime);
+    maxFrametime = Math.max(frametime, maxFrametime);
+    counter.innerHTML = `
+    Min Frametime: ${minFrametime}ms <br>
+    Max Frametime: ${maxFrametime}ms <br>`;
+    
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -34,9 +44,6 @@ function update() {
     space(canvas, ctx);
     ship(ctx, renderedFrame);
     thruster(ctx, renderedFrame, fire);
-    counter.innerHTML = `
-    ${stop - start}ms <br>`;
-    start = stop;
 
     renderedFrame++;
 
