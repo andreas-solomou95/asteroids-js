@@ -4,3 +4,12 @@ body {
     font-size: 0;
     overflow: hidden;
 }
+
+#frameCounter {
+    font-family: monospace;
+    font-size: 30px;
+    color: white;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
