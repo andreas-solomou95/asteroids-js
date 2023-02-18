@@ -1,4 +1,5 @@
-import { space, ship, thruster, laser } from './assets.js';
+import { space, ship, thruster } from './assets.js';
+import { drawLasers, fireLaser } from './laser.js';
 import { FPS, SHIP_SPEC } from './variables.js';
 import { toRads } from './utils.js';
 
@@ -11,11 +12,13 @@ const counter = document.getElementById('frameCounter');
 export let currentX = SHIP_SPEC.x;
 export let currentY = SHIP_SPEC.y;
 export let currentAngle = SHIP_SPEC.a;
+export let laserCollection = [];
 
 const keydown = (event) => keys[event.keyCode] = event.keyCode;
 const keyup = (event) => keys[event.keyCode] = false;
 
 window.requestAnimationFrame(update);
+// setInterval(update, 1000 / FPS);
 
 window.addEventListener('keydown', keydown);
 window.addEventListener('keyup', keyup);
@@ -33,17 +36,27 @@ function update() {
     start = stop;
     minFrametime = Math.min(frametime, minFrametime);
     maxFrametime = Math.max(frametime, maxFrametime);
-    counter.innerHTML = `
-    Min Frametime: ${minFrametime}ms <br>
-    Max Frametime: ${maxFrametime}ms <br>`;
-    
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    let inlineConsole = `
+    ${canvas.width} x ${canvas.height}<br>
+    Min Frametime: ${minFrametime}ms <br>
+    Max Frametime: ${maxFrametime}ms <br>`;
+
+    // inlineConsole += 'Lasers: <br>';
+    // laserCollection.forEach(([x, y, a]) => {
+    //     inlineConsole += `[${Math.round(x)}, ${Math.round(y)}, ${Math.round(a)}rad]<br>`;
+    // })
+    counter.innerHTML = inlineConsole;
+
+
     handleKeyEvents();
-    space(canvas, ctx);
+    // space(canvas, ctx);
     ship(ctx, renderedFrame);
     thruster(ctx, renderedFrame, fire);
+    laserCollection = drawLasers(renderedFrame, ctx, laserCollection, canvas.width, canvas.height);
 
     renderedFrame++;
 
@@ -53,7 +66,7 @@ function update() {
 function handleKeyEvents() {
     // laser
     if (keys[32]) {
-        laser(ctx, currentX, currentY, currentAngle);
+        laserCollection = fireLaser(currentX, currentY, currentAngle, laserCollection);
     }
     // turn left
     if (keys[37] || keys[65]) {

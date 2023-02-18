@@ -8,8 +8,12 @@ const SHIP_DIMENSIONS = {
 
 export const SHIP_SPEC = {
     ...SHIP_DIMENSIONS,
-    // dv: Math.round(20 / SHIP_DIMENSIONS.r),
-    // angV: Math.round(16 / SHIP_DIMENSIONS.r)
-    dv: 2,
+    dv: 3,
     angV: 5
+}
+
+export const LASER_SPEC = {
+    dv: 5,
+    width: 2,
+    height: 2
 }
