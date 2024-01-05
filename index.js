@@ -1,6 +1,6 @@
 import { space, ship, thruster } from './assets.js';
 import { drawLasers, fireLaser } from './laser.js';
-import { drawBlocks } from './blocks.js';
+import { drawPolygons } from './polygons.js';
 import { FPS, LASER_SPEC, SHIP_SPEC } from './variables.js';
 import { toRads } from './utils.js';
 
@@ -14,7 +14,7 @@ export let currentX = SHIP_SPEC.x;
 export let currentY = SHIP_SPEC.y;
 export let currentAngle = SHIP_SPEC.a;
 export let laserCollection = [];
-export let blocksCollection = [];
+export let polygonsCollection = [];
 
 const keydown = (event) => keys[event.keyCode] = event.keyCode;
 const keyup = (event) => keys[event.keyCode] = false;
@@ -56,7 +56,7 @@ function update() {
 
     handleKeyEvents();
     space(canvas, ctx);
-    blocksCollection = drawBlocks(ctx, blocksCollection, canvas.width, canvas.height);
+    polygonsCollection = drawPolygons(ctx, polygonsCollection, canvas.width, canvas.height);
     ship(ctx, renderedFrame);
     thruster(ctx, renderedFrame, fire);
     laserCollection = drawLasers(renderedFrame, ctx, laserCollection, canvas.width, canvas.height);
