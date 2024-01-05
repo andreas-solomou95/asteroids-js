@@ -19,7 +19,7 @@ export const LASER_SPEC = {
     rate: 6 // per second
 }
 
-export const BLOCK_SPEC = {
+export const POLYGON_SPEC = {
     width: 100,
     height: 100,
     dv: 3

@@ -1,4 +1,4 @@
-import { SHIP_SPEC, BLOCK_SPEC } from './variables.js';
+import { SHIP_SPEC, POLYGON_SPEC } from './variables.js';
 import { toRads } from './utils.js';
 import { currentX, currentY, currentAngle} from './index.js';
 
@@ -73,8 +73,8 @@ export function thruster(ctx, renderedFrame, fire) {
     ctx.stroke();
 }
 
-export function block(ctx, x, y) {
+export function polygon(ctx, x, y) {
     ctx.strokeStyle = 'limegreen';
-    ctx.rect(x, y, 100, 100);
+    ctx.rect(x, y, POLYGON_SPEC.width, POLYGON_SPEC.height);
     ctx.stroke();
 }
