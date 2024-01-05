@@ -15,5 +15,12 @@ export const SHIP_SPEC = {
 export const LASER_SPEC = {
     dv: 5,
     width: 2,
-    height: 2
+    height: 2,
+    rate: 6 // per second
+}
+
+export const BLOCK_SPEC = {
+    width: 100,
+    height: 100,
+    dv: 3
 }

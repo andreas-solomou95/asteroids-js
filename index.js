@@ -1,6 +1,7 @@
 import { space, ship, thruster } from './assets.js';
 import { drawLasers, fireLaser } from './laser.js';
-import { FPS, SHIP_SPEC } from './variables.js';
+import { drawBlocks } from './blocks.js';
+import { FPS, LASER_SPEC, SHIP_SPEC } from './variables.js';
 import { toRads } from './utils.js';
 
 let renderedFrame = 0;
@@ -13,6 +14,7 @@ export let currentX = SHIP_SPEC.x;
 export let currentY = SHIP_SPEC.y;
 export let currentAngle = SHIP_SPEC.a;
 export let laserCollection = [];
+export let blocksCollection = [];
 
 const keydown = (event) => keys[event.keyCode] = event.keyCode;
 const keyup = (event) => keys[event.keyCode] = false;
@@ -53,7 +55,8 @@ function update() {
 
 
     handleKeyEvents();
-    // space(canvas, ctx);
+    space(canvas, ctx);
+    blocksCollection = drawBlocks(ctx, blocksCollection, canvas.width, canvas.height);
     ship(ctx, renderedFrame);
     thruster(ctx, renderedFrame, fire);
     laserCollection = drawLasers(renderedFrame, ctx, laserCollection, canvas.width, canvas.height);
@@ -63,10 +66,15 @@ function update() {
     window.requestAnimationFrame(update);
 }
 
+let lastFire = null;
+
 function handleKeyEvents() {
     // laser
     if (keys[32]) {
-        laserCollection = fireLaser(currentX, currentY, currentAngle, laserCollection);
+        if (!lastFire || new Date().getTime() - lastFire >= 1000 / LASER_SPEC.rate) {
+            lastFire = new Date().getTime();
+            laserCollection = fireLaser(currentX, currentY, currentAngle, laserCollection, canvas);
+        }
     }
     // turn left
     if (keys[37] || keys[65]) {
@@ -79,7 +87,19 @@ function handleKeyEvents() {
     // move forward
     if (keys[38] || keys[87]) {
         currentX += SHIP_SPEC.dv * Math.cos(toRads(currentAngle));
+        if (currentX < 0) {
+            currentX = canvas.width + currentX;
+        }
+        if (currentX > canvas.width) {
+            currentX = currentX - canvas.width;
+        }
         currentY -= SHIP_SPEC.dv * Math.sin(toRads(currentAngle));
+        if (currentY < 0) {
+            currentY = canvas.height + currentY;
+        }
+        if (currentY > canvas.height) {
+            currentY = currentY - canvas.height;
+        }
         fire = true;
         return;
     }

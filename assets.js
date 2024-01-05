@@ -1,4 +1,4 @@
-import { SHIP_SPEC } from './variables.js';
+import { SHIP_SPEC, BLOCK_SPEC } from './variables.js';
 import { toRads } from './utils.js';
 import { currentX, currentY, currentAngle} from './index.js';
 
@@ -70,5 +70,11 @@ export function thruster(ctx, renderedFrame, fire) {
     ctx.strokeStyle = fire ? '#f00' : '#700';
     ctx.lineWidth = 2;
 
+    ctx.stroke();
+}
+
+export function block(ctx, x, y) {
+    ctx.strokeStyle = 'limegreen';
+    ctx.rect(x, y, 100, 100);
     ctx.stroke();
 }
