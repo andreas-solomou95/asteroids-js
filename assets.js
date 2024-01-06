@@ -74,7 +74,25 @@ export function thruster(ctx, renderedFrame, fire) {
 }
 
 export function polygon(ctx, x, y) {
+    const sides = 9;
+    const radius= POLYGON_SPEC.radius;
+    const angle = 2 * Math.PI / sides;
+
     ctx.strokeStyle = 'limegreen';
-    ctx.rect(x, y, POLYGON_SPEC.width, POLYGON_SPEC.height);
+    ctx.shadowBlur = 5;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    ctx.shadowColor = '#3af21b';
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    ctx.moveTo(x + radius * Math.cos(0), y + radius * Math.sin(0));
+
+    for (var i = 1; i <= sides; i++) {
+        ctx.lineTo(x + radius * Math.cos(i * angle), y + radius * Math.sin(i * angle));
+    }
+
+    ctx.closePath();
     ctx.stroke();
+
 }

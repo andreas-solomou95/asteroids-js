@@ -1,7 +1,7 @@
 import { space, ship, thruster } from './assets.js';
 import { drawLasers, fireLaser } from './laser.js';
 import { drawPolygons } from './polygons.js';
-import { FPS, LASER_SPEC, SHIP_SPEC } from './variables.js';
+import { LASER_SPEC, SHIP_SPEC } from './variables.js';
 import { toRads } from './utils.js';
 
 let renderedFrame = 0;

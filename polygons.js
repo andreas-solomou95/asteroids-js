@@ -8,22 +8,22 @@ let spawnDirection = 0;
 let spawOffset = 0;
 
 export function drawPolygons(ctx, polygonsCollection, canvasWidth, canvasHeight) {
-    const { width, height, dv } = POLYGON_SPEC;
+    const { radius, dv } = POLYGON_SPEC;
     polygonsCollection = spawner(polygonsCollection, canvasWidth, canvasHeight);
     polygonsCollection.forEach(([x, y, angle], index) => {
         x += dv * Math.cos(toRads(angle));
-        if (x < 0 - width) {
-            x = canvasWidth + x + width;
+        if (x < 0 - radius) {
+            x = canvasWidth + x + radius;
         }
         if (x > canvasWidth) {
-            x = x - canvasWidth - width;
+            x = x - canvasWidth - radius;
         }
         y -= dv * Math.sin(toRads(angle));
-        if (y < 0 - height) {
-            y = y + canvasHeight + height;
+        if (y < 0 - radius) {
+            y = y + canvasHeight + radius;
         }
         if (y > canvasHeight) {
-            y = y - canvasHeight - height;
+            y = y - canvasHeight - radius;
         }
         polygon(ctx, x, y);
 
@@ -40,8 +40,8 @@ function spawner(polygonsCollection, canvasWidth, canvasHeight) {
     let x, y, a = 0;
     switch(spawnDirection) {
         case 0:
-            x = 0 - POLYGON_SPEC.width;
-            y = 0 - POLYGON_SPEC.height + spawOffset;
+            x = 0 - POLYGON_SPEC.radius;
+            y = 0 - POLYGON_SPEC.radius + spawOffset;
             a = 335 + (spawOffset % 360);
             break;
         case 1:
@@ -55,7 +55,7 @@ function spawner(polygonsCollection, canvasWidth, canvasHeight) {
             a = 155 + (spawOffset % 360);
             break;
         case 3:
-            x = 0 - POLYGON_SPEC.width + spawOffset;
+            x = 0 - POLYGON_SPEC.radius + spawOffset;
             y = canvasHeight;
             a = 25 + (spawOffset % 360);
             break;
