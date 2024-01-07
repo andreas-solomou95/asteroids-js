@@ -20,6 +20,7 @@ export const LASER_SPEC = {
 }
 
 export const POLYGON_SPEC = {
+    sides: 9,
     radius: 100,
     dv: 3
 }

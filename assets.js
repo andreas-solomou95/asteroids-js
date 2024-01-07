@@ -74,7 +74,7 @@ export function thruster(ctx, renderedFrame, fire) {
 }
 
 export function polygon(ctx, x, y) {
-    const sides = 9;
+    const sides = POLYGON_SPEC.sides;
     const radius= POLYGON_SPEC.radius;
     const angle = 2 * Math.PI / sides;
 
